@@ -1,15 +1,12 @@
 package com.example.newsapp
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.Html
 import android.text.Html.FROM_HTML_MODE_LEGACY
 import android.util.Log
-import android.view.LayoutInflater
-import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.newsapp.databinding.ActivityMainBinding
 
@@ -25,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        news = savedInstanceState?.getSerializable("NEWS") as News? ?: News(
+        news = savedInstanceState?.getParcelable("NEWS") ?: News(
             "BMW expects half of sales to be electric cars by 2030",
             "German carmaker forecast on Wednesday a big rise in pre-tax profit for this year",
             "https://www.irishtimes.com/image-creator/?id=1.4512833&origw=1440",
@@ -36,8 +33,8 @@ class MainActivity : AppCompatActivity() {
             "https://www.irishtimes.com/business/manufacturing/bmw-expects-half-of-sales-to-be-electric-cars-by-2030-1.4512834"
         )
 
-        if (savedInstanceState?.getSerializable("NEWS") != null) {
-            news = savedInstanceState.getSerializable("NEWS") as News
+        if (savedInstanceState?.getParcelable<News>("NEWS") != null) {
+            news = savedInstanceState.getParcelable<News>("NEWS") as News
             Log.i("save_instance", "RESTORED")
         } else {
             news = News(
@@ -81,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        outState.putSerializable("NEWS", news)
+        outState.putParcelable("NEWS", news)
 
     }
 }
